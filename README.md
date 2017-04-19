@@ -1,2 +1,2 @@
 # Recenzija
-Recenziranje tilmova i serija
+Recenziranje filmova i serija
