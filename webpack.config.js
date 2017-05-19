@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const bootstrapEntryPoints = require("./webpack.bootstrap.config");
 
 // Use ExtractTextPlugin only in production mode
 const isProduction = process.env.NODE_ENV === 'production';
@@ -14,9 +15,13 @@ const cssProd = ExtractTextPlugin.extract({
 
 const cssConfig = isProduction ? cssProd : cssDev;
 
+// Using default boostrap configs from webpack.bootstrap.js depending on active enviorment 
+const bootstrapConfig = isProduction ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
+
 module.exports = {
   entry: {
     app: './src/app.js',
+    bootstrap: bootstrapConfig
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -34,7 +39,21 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
-      }
+      },
+      // Including fonts for boostrap loader
+      { 
+        test: /\.(woff2?|svg)$/, 
+        use: 'url-loader?limit=10000' 
+      },
+      { 
+        test: /\.(ttf|eot)$/, 
+        use: 'file-loader' 
+      },
+      { 
+        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, 
+        use: 'imports-loader?jQuery=jquery' 
+      },
+
     ]
   },
   devServer: {
@@ -61,9 +80,11 @@ module.exports = {
     // Makes app.css in dist folder from sass file
     new ExtractTextPlugin({
       filename: 'app.css',
+      // Using only in production
       disable: !isProduction,
       allChunks: true
     }),
+    // For hot reloading
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   ]
