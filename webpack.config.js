@@ -31,7 +31,7 @@ module.exports = {
     rules: [
       // Css loaders, using extract text plugin to import sass FILE as dependeny to dist/index.html
       {
-        test: /\.scss$/, 
+        test: /\.scss$/,
         use: cssConfig
       },
       {
@@ -41,17 +41,17 @@ module.exports = {
         use: 'babel-loader'
       },
       // Including fonts for boostrap loader
-      { 
-        test: /\.(woff2?|svg)$/, 
-        use: 'url-loader?limit=10000' 
+      {
+        test: /\.(woff2?|svg)$/,
+        use: 'url-loader?limit=10000'
       },
-      { 
-        test: /\.(ttf|eot)$/, 
-        use: 'file-loader' 
+      {
+        test: /\.(ttf|eot)$/,
+        use: 'file-loader'
       },
-      { 
-        test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, 
-        use: 'imports-loader?jQuery=jquery' 
+      {
+        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        use: 'imports-loader?jQuery=jquery'
       },
 
     ]
@@ -86,6 +86,6 @@ module.exports = {
     }),
     // For hot reloading
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
   ]
 }
