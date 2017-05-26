@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import bankStore from './bankStore';
 import constants from './constants';
 import PropTypes from 'prop-types';
-import css from "./app.scss";
+import './app.scss'
 
 class BankApp extends Component {
 

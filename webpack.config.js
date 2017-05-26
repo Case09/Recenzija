@@ -7,6 +7,7 @@ const glob = require('glob');
 const PurifyCSSPlugin = require('purifycss-webpack');
 
 const isProd = process.env.NODE_ENV === 'production'; //true or false
+
 const cssDev = [
 	'style-loader',
 	'css-loader?sourceMap',
