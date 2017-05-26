@@ -70,6 +70,7 @@ module.exports = {
             { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, use: 'imports-loader?jQuery=jquery' }
         ]
     },
+    devtool: "eval-source-map",
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
