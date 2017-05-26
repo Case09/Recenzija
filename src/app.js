@@ -1,20 +1,72 @@
-const css = require('./app.scss');
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import bankStore from './bankStore';
+import constants from './constants';
+import PropTypes from 'prop-types';
+import './app.scss';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+class BankApp extends Component {
 
-ReactDOM.render(
-  <div>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      Button with data-target
-    </button>
-    <div class="collapse" id="collapseExample">
-      <div class="well">
-       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+  handleDeposit() {
+    this.props.onDeposit(this.refs.amount.value);
+    this.refs.amount.value = '';
+  }
+
+  handleWithdraw() {
+    this.props.onWithdraw(this.refs.amount.value);
+    this.refs.amount.value = '';
+  }
+  render() {
+    return (
+      <div>
+        <header>
+          <img src="//www.pro-react.com/logos/redux-bank.svg" width="150" />Redux Bank
+        </header>
+        <h1>Your balance is ${(this.props.balance).toFixed(2)}</h1>
+        <div className="atm">
+          <input type="text" placeholder="Enter Ammount" ref="amount" />
+          <button onClick={this.handleWithdraw.bind(this)}>Withdraw</ button>
+          <button onClick={this.handleDeposit.bind(this)}>Deposit</ button>
+        </div>
       </div>
-    </div>
-  </div>
-  ,document.getElementById('root')
-);
+    );
+  }
+}
+
+BankApp.propTypes = {
+  balance: PropTypes.number,
+  onDeposit: PropTypes.func,
+  onWithdraw: PropTypes.func
+};
+
+class BankAppContainer extends Component {
+
+  constructor(...args) {
+    super(...args);
+    bankStore.dispatch({ type: constants.CREATE_ACCOUNT })
+    this.state = {
+      balance: bankStore.getState().balance
+    }
+  }
+  componentDidMount() {
+    this.unsubscribe = bankStore.subscribe(() =>
+      this.setState({ balance: bankStore.getState().balance })
+    );
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+  render() {
+    return (
+      <BankApp
+        balance={bankStore.getState().balance}
+        onDeposit={(amount) => bankStore.dispatch(
+          { type: constants.DEPOSIT_INTO_ACCOUNT, amount: amount })}
+        onWithdraw={(amount) => bankStore.dispatch(
+          { type: constants.WITHDRAW_FROM_ACCOUNT, amount: amount })}
+      />
+    )
+  }
+}
+
+render(<BankAppContainer />, document.getElementById('root'));

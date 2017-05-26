@@ -1,91 +1,99 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require('webpack');
-const bootstrapEntryPoints = require("./webpack.bootstrap.config");
+const path = require("path");
+const bootstrapEntryPoints = require('./webpack.bootstrap.config');
+const glob = require('glob');
+const PurifyCSSPlugin = require('purifycss-webpack');
 
-// Use ExtractTextPlugin only in production mode
-const isProduction = process.env.NODE_ENV === 'production';
-const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
+const isProd = process.env.NODE_ENV === 'production'; //true or false
+const cssDev = [
+	'style-loader',
+	'css-loader?sourceMap',
+	'sass-loader',
+	{
+		loader: 'sass-resources-loader',
+		options: {
+			// Provide path to the file with resources
+			resources: [
+                './src/resources.scss'
+            ],
+		},
+	}];
 const cssProd = ExtractTextPlugin.extract({
-  fallback: 'style-loader',
-  use: ['css-loader', 'sass-loader'],
-  publicPath: '/dist'
+    fallback: 'style-loader',
+    use: ['css-loader','sass-loader', {
+		loader: 'sass-resources-loader',
+		options: {
+			// Provide path to the file with resources
+			resources: [
+				'./src/resources.scss'
+			],
+		},
+	}],
+    publicPath: '/dist'
 })
+const cssConfig = isProd ? cssProd : cssDev;
 
-const cssConfig = isProduction ? cssProd : cssDev;
-
-// Using default boostrap configs from webpack.bootstrap.js depending on active enviorment 
-const bootstrapConfig = isProduction ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
+const bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoints.dev;
 
 module.exports = {
-  entry: {
-    app: './src/app.js',
-    bootstrap: bootstrapConfig
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
-  },
-  module: {
-    rules: [
-      // Css loaders, using extract text plugin to import sass FILE as dependeny to dist/index.html
-      {
-        test: /\.scss$/,
-        use: cssConfig
-      },
-      {
-        // All js files going through babel
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      },
-      // Including fonts for boostrap loader
-      {
-        test: /\.(woff2?|svg)$/,
-        use: 'url-loader?limit=10000'
-      },
-      {
-        test: /\.(ttf|eot)$/,
-        use: 'file-loader'
-      },
-      {
-        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-        use: 'imports-loader?jQuery=jquery'
-      },
-
+    entry: {
+        app: './src/app.js',
+        bootstrap: bootstrapConfig
+    },
+    output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: '[name].bundle.js'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.scss$/, 
+                use: cssConfig
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                use: [
+                  'file-loader?name=images/[name].[ext]',
+                  'image-webpack-loader?bypassOnDebug'
+                ]
+            },
+            { test: /\.(woff2?)$/, use: 'url-loader?limit=10000&name=fonts/[name].[ext]' },
+            { test: /\.(ttf|eot)$/, use: 'file-loader?name=fonts/[name].[ext]' },
+            // Bootstrap 3
+            { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, use: 'imports-loader?jQuery=jquery' }
+        ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        hot: true,
+        open: true,
+        stats: 'errors-only'
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'Project Demo',
+            hash: true,
+            template: './src/index.html'
+        }),
+        new ExtractTextPlugin({
+            filename: '/css/[name].css',
+            disable: !isProd,
+            allChunks: true
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        // Make sure this is after ExtractTextPlugin!
+        new PurifyCSSPlugin({
+            // Give paths to parse for rules. These should be absolute!
+            paths: glob.sync(path.join(__dirname, 'src/*.html'))
+        })
     ]
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    // Gzip files
-    compress: true,
-    hot: true,
-    // Show only errors in logs instead of all that green text
-    stats: "errors-only",
-    // Open proj in new browser window
-    open: true
-  },
-  plugins: [
-    // For making index.html in dist folder from template index.html
-    new HtmlWebpackPlugin({
-      title: "Project demo",
-      minify: {
-        collapseWhitespace: true,
-      },
-      // Hashes name of files in index.html so it's unique
-      hash: true,
-      template: './src/index.html'
-    }),
-    // Makes app.css in dist folder from sass file
-    new ExtractTextPlugin({
-      filename: 'app.css',
-      // Using only in production
-      disable: !isProduction,
-      allChunks: true
-    }),
-    // For hot reloading
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-  ]
 }
