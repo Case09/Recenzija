@@ -85,6 +85,13 @@ module.exports = {
         stats: 'errors-only'
     },
     plugins: [
+        // Putting bootstrap script before app css
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'bootstrap',
+            minChunks: Infinity,
+            filename: '[name].bundle.js',
+        }),
+        
         new HtmlWebpackPlugin({
             title: 'Project Demo',
             hash: true,
