@@ -10,7 +10,13 @@ const isProd = process.env.NODE_ENV === 'production'; //true or false
 
 const cssDev = [
 	'style-loader',
-	'css-loader?sourceMap',
+	{
+        loader: 'css-loader',
+        options: {
+            sourceMap: true,
+            modules: true
+        }
+    },
 	'sass-loader',
 	{
 		loader: 'sass-resources-loader',
@@ -50,7 +56,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/, 
+                test: /\.scss$/,
                 use: cssConfig
             },
             {
@@ -71,7 +77,6 @@ module.exports = {
             { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, use: 'imports-loader?jQuery=jquery' }
         ]
     },
-    devtool: "eval-source-map",
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,

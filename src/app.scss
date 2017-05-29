@@ -1,3 +1,6 @@
+@import './bootstrap/customizations.scss';
+@import './resources.scss';
+
 body {
   margin: 0;
   font-family: "Myriad Pro", Helvetica, Arial, sans-serif;
@@ -16,7 +19,7 @@ h1{
   font-size: 30px;
 }
 .atm {
-  width: 300px;
+  width: $section-width;
   height: 115px;
   border-radius: 10px;
   background-color: #1D4F27;
@@ -25,9 +28,11 @@ h1{
 }
 .atm input {
   font-size:25px;
-  width: 272px
+  width: 272px;
+  color: black;
 }
 .atm button {
   margin: 20px 10px;
   padding: 20px 40px;
+  color: black
 }

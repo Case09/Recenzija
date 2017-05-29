@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import bankStore from './bankStore';
 import constants from './constants';
 import PropTypes from 'prop-types';
-import './app.scss'
+import styles from "./app.scss"
 
 class BankApp extends Component {
 
@@ -23,7 +23,7 @@ class BankApp extends Component {
           <img src="//www.pro-react.com/logos/redux-bank.svg" width="150" />Redux Bank
         </header>
         <h1>Your balance is ${(this.props.balance).toFixed(2)}</h1>
-        <div className="atm">
+        <div className={styles.atm}>
           <input type="text" placeholder="Enter Ammount" ref="amount" />
           <button onClick={this.handleWithdraw.bind(this)}>Withdraw</ button>
           <button onClick={this.handleDeposit.bind(this)}>Deposit</ button>
