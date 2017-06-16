@@ -8,7 +8,7 @@ const initialState = {
   }
 }
 
-const balanceReducer = (state = initialState, action) => {
+const balanceReducer = (state = initialState.initialBalance, action) => {
   switch (action.type) {
     case constants.DEPOSIT_INTO_ACCOUNT:
       return state + parseFloat(action.amount);
