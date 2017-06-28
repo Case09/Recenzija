@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect, Provider } from 'react-redux';
-import bankStore from './bankStore';
-import constants from './constants';
-import bankActionCreators from './bankActionCreators';
+import bankStore from './stores/bankStore';
+import constants from './actions/constants';
+import bankActionCreators from './actions/bankActionCreators';
 import PropTypes from 'prop-types';
 import styles from "./app.scss"
 

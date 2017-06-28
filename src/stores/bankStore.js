@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware }  from 'redux'
-import bankReducer  from './bankReducer';
+import bankReducer  from '../reducers/bankReducer';
 
 const logger = (store) => (next) => (action) => {
   console.log('dispatching: ', action);

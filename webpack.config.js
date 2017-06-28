@@ -53,6 +53,11 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: '[name].bundle.js'
     },
+    externals: {
+        'cheerio': 'window',
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true,
+    },
     module: {
         rules: [
             {
@@ -60,9 +65,14 @@ module.exports = {
                 use: cssConfig
             },
             {
-                test: /\.js$/,
+                test: /\.js?$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['react', 'es2015', 'stage-0']
+                    }
+                }
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
