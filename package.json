@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "test": "mocha -w test/helpers/browser.js test/*.spec.js",
+    "test": "mocha -w --require babel-register tests/helpers/browser.js --recursive tests",
     "prod": "npm run clean && cross-env NODE_ENV=production webpack -p",
     "clean": "rimraf ./dist/*"
   },

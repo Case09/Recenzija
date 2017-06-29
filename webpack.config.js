@@ -46,13 +46,14 @@ const bootstrapConfig = isProd ? bootstrapEntryPoints.prod : bootstrapEntryPoint
 
 module.exports = {
     entry: {
-        app: './src/app.js',
+        app: './src/index.js',
         bootstrap: bootstrapConfig
     },
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: '[name].bundle.js'
     },
+    // Mocha stuff
     externals: {
         'cheerio': 'window',
         'react/lib/ExecutionEnvironment': true,
@@ -94,6 +95,7 @@ module.exports = {
         open: true,
         stats: 'errors-only'
     },
+    devtool: 'source-map',
     plugins: [
         // Putting bootstrap script before app css
         new webpack.optimize.CommonsChunkPlugin({
