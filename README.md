@@ -1,7 +1,7 @@
 # Recenzija
 Recenziranje filmova i serija
 
-Tech stack:
+Tech stack (full ES6):
   - React
   - Redux
   - Sass
