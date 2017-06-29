@@ -93,6 +93,7 @@ module.exports = {
         compress: true,
         hot: true,
         open: true,
+        openPage: '',
         stats: 'errors-only'
     },
     // For debugging
