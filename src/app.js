@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Bank from './components/Bank';
+import Main from './components/Main';
+import styles from "./app.scss"
 
-export default class BankAppContainer extends Component {
+
+export default class App extends Component {
   render() {
     return (
      <div>
-        <Bank />
+        <Main />
         {this.props.children}
      </div>
     );

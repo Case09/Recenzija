@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import bankStore from './stores/bankStore';
-import BankAppContainer from './app';
+import appStore from './stores/appStore';
+import App from './app';
 
 ReactDOM.render(
-  <Provider store={bankStore}>
-    <BankAppContainer />
+  <Provider store={appStore}>
+    <App />
   </Provider>, document.getElementById('root'));

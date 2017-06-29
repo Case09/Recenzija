@@ -95,6 +95,7 @@ module.exports = {
         open: true,
         stats: 'errors-only'
     },
+    // For debugging
     devtool: 'source-map',
     plugins: [
         // Putting bootstrap script before app css
