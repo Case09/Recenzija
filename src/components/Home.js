@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Header from './Header';
 
 export default class Main extends Component {
     render() {
         return (
-            <div className="well">
-                Ready to dive in.
+            <div className="main">
+                <Header isLoggedIn={true} />
             </div>
         );
     }

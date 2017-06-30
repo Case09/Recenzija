@@ -1,9 +1,9 @@
-import constants from '../actions/constants';
+import { IS_ALIVE } from '../actions/constants';
 
 
 const appReducer = (state = [], action) => {
   switch (action.type) {
-    case constants.IS_ALIVE:
+    case IS_ALIVE:
       return action.payload
     default:
       return state;

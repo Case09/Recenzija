@@ -4,7 +4,7 @@
 body {
   margin: 0;
   font-family: "Myriad Pro", Helvetica, Arial, sans-serif;
-  background-color: #f3e4b1;
+  background-color: #dfdfdf;
   color: #000000;
   text-align: center;
 }
@@ -17,22 +17,4 @@ header {
 }
 h1{
   font-size: 30px;
-}
-.atm {
-  width: $section-width;
-  height: 115px;
-  border-radius: 10px;
-  background-color: #1D4F27;
-  margin: 10px auto 0 auto;
-  padding: 20px;
-}
-.atm input {
-  font-size:25px;
-  width: 272px;
-  color: black;
-}
-.atm button {
-  margin: 20px 10px;
-  padding: 20px 40px;
-  color: black
 }
