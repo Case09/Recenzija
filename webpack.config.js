@@ -8,6 +8,7 @@ const PurifyCSSPlugin = require('purifycss-webpack');
 
 const isProd = process.env.NODE_ENV === 'production'; //true or false
 
+
 const cssDev = [
 	'style-loader',
 	{
@@ -105,7 +106,7 @@ module.exports = {
             minChunks: Infinity,
             filename: '[name].bundle.js',
         }),
-        
+
         new HtmlWebpackPlugin({
             title: 'Project Demo',
             hash: true,
