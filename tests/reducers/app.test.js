@@ -1,13 +1,13 @@
 import { expect } from 'chai';
-import { IS_ALIVE } from '../../src/actions/constants';
-import appReducer from '../../src/reducers/appReducer';
+import { IS_LOGGED_IN } from '../../src/actions/constants';
+import authenticationReducer from '../../src/reducers/authentication';
 
-describe('App reducer', () => {
-  it ('handles action of type IS_ALIVE', () => {
+describe('Authentication reducer', () => {
+  it ('handles action of type IS_LOGGED_IN', () => {
     const action = {
-      type: IS_ALIVE,
+      type: IS_LOGGED_IN,
       payload: false
     }
-    expect(appReducer([], action)).to.eql(false)
-  }); 
+    expect(authenticationReducer([], action)).to.eql(false)
+  });
 });

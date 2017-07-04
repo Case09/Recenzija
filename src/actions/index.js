@@ -1,8 +1,8 @@
-import { IS_ALIVE } from './constants';
+import { IS_LOGGED_IN } from './constants';
 
-export function isAlive(alive) {
+export function authenticate(loggedIn) {
   return {
-    type: IS_ALIVE,
-    payload: alive
+    type: IS_LOGGED_IN,
+    payload: loggedIn
   };
 }

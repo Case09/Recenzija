@@ -9,7 +9,7 @@ describe('Header', () => {
   describe('render', () => {
     it ('should render without errors', () => {
       const wrapper = shallow(<Header />);
-      expect(wrapper.length).to.equal(1);
+      expect(wrapper).to.exist;
     });
 
     it ('should render div wrapper with class of header', () => {
@@ -20,11 +20,6 @@ describe('Header', () => {
     it ('should render well component', () => {
       const wrapper = shallow(<Header />);
       expect(wrapper.find('.well').length).to.equal(1);
-    });
-
-    it ('should render dropdown login button component', () => {
-      const wrapper = shallow(<Header />);
-      expect(wrapper.find('UserDropdown').length).to.equal(1);
     });
 
   });
