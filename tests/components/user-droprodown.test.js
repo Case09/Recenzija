@@ -22,7 +22,7 @@ describe('UserDropdown', () => {
 
   it('should only show login li if user is not logged in', () => {
     const props = {
-      isLoggedIn: false
+      authenticated: false
     }
     const wrapper = shallow(<UserDropdown {...props}/>);
     expect(wrapper.find('li').text()).to.equal('Login');
@@ -30,7 +30,7 @@ describe('UserDropdown', () => {
 
   it('should show logout, userSettings and avatar li if user is logged in', () => {
     const props = {
-      isLoggedIn: true
+      authenticated: true
     }
     const wrapper = shallow(<UserDropdown {...props}/>);
     expect(wrapper.contains([

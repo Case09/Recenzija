@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware }  from 'redux'
-import rootReducer  from '../reducers/authentication';
+import rootReducer  from '../reducers/combineReducers';
 
 const logger = (store) => (next) => (action) => {
   console.log('dispatching: ', action);

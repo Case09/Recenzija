@@ -11,7 +11,7 @@ export class UserDropdown extends Component {
     }
 
     render() {
-        const { isLoggedIn } = this.props;
+        const { authenticated } = this.props;
         return (
             <div className={styles.dropdown}>
                 <div className="dropdown" style={{display: "inline-block"}}>
@@ -20,19 +20,28 @@ export class UserDropdown extends Component {
                         <span style={{marginLeft: "5px"}} className="caret"></span>
                     </button>
                     {
-                        isLoggedIn ?
+                        authenticated ?
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <li>Avatar</li>
                             <li>Logout</li>
                             <li><Link to="/userSettings" /></li>
                         </ul> :
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <li><a>Login</a></li>
+                            <li><a onClick={this.login.bind(this)}>Login</a></li>
                         </ul>
                     }
                 </div>
             </div>
         );
+    }
+
+    login() {
+        if (this.props.authenticated) {
+            this.props.authenticate(false);
+            return;
+        }
+        this.props.authenticate(true);
+        return;
     }
 }
 
