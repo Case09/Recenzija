@@ -33,10 +33,7 @@ describe('UserDropdown', () => {
       authenticated: true
     }
     const wrapper = shallow(<UserDropdown {...props}/>);
-    expect(wrapper.contains([
-      <li>Avatar</li>,
-      <li>Logout</li>,
-    ])).to.equal(true);
+    expect(wrapper.find('li').length).to.equal(3);
   });
 
 });

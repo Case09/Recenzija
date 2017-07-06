@@ -1,6 +1,6 @@
 import { IS_LOGGED_IN } from './constants';
 
-export function authenticate(loggedIn) {
+export default function authenticate(loggedIn) {
   return {
     type: IS_LOGGED_IN,
     payload: loggedIn

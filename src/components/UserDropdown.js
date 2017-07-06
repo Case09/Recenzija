@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styles from "./styles/userDropdown.scss";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as actions from '../actions';
+import authenticate from '../actions/authenticate';
 
 export class UserDropdown extends Component {
 
@@ -12,6 +12,7 @@ export class UserDropdown extends Component {
 
     render() {
         const { authenticated } = this.props;
+        const style = { pointer: "cursor" };
         return (
             <div className={styles.dropdown}>
                 <div className="dropdown" style={{display: "inline-block"}}>
@@ -22,9 +23,9 @@ export class UserDropdown extends Component {
                     {
                         authenticated ?
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <li>Avatar</li>
-                            <li>Logout</li>
-                            <li><Link to="/userSettings" /></li>
+                            <li style={style}><Link to="/" >Avatar</Link></li>
+                            <li style={style}><Link to="/userSettings" >User Settings</Link></li>
+                            <li style={style}><Link to="/" >Logout</Link></li>
                         </ul> :
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <li><a onClick={this.login.bind(this)}>Login</a></li>
@@ -51,4 +52,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, actions)(UserDropdown);
+export default connect(mapStateToProps, authenticate)(UserDropdown);
