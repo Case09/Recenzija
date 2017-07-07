@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styles from "./styles/userDropdown.scss";
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom';
-import authenticate from '../actions/authenticate';
+import { authenticate } from '../actions/authenticate';
 
 export class UserDropdown extends Component {
 
@@ -11,7 +12,7 @@ export class UserDropdown extends Component {
     }
 
     render() {
-        const { authenticated } = this.props;
+        const authenticated = this.props.authenticated;
         const style = { pointer: "cursor" };
         return (
             <div className={styles.dropdown}>
@@ -25,7 +26,7 @@ export class UserDropdown extends Component {
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <li style={style}><Link to="/" >Avatar</Link></li>
                             <li style={style}><Link to="/userSettings" >User Settings</Link></li>
-                            <li style={style}><Link to="/" >Logout</Link></li>
+                            <li style={style}><Link to="/">Logout</Link></li>
                         </ul> :
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <li><a onClick={this.login.bind(this)}>Login</a></li>
@@ -52,4 +53,10 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, authenticate)(UserDropdown);
+function mapDispatchToProps(dispatch) {
+    return {
+        authenticate: bindActionCreators(authenticate, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);

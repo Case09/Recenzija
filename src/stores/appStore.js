@@ -6,5 +6,5 @@ const logger = (store) => (next) => (action) => {
   return next(action);
 }
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(logger));
 export default store;

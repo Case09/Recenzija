@@ -6,8 +6,8 @@ describe('Authentication reducer', () => {
   it ('handles action of type IS_LOGGED_IN', () => {
     const action = {
       type: IS_LOGGED_IN,
-      payload: false
+      isLoggedIn: false
     }
-    expect(authenticationReducer([], action)).to.eql(false)
+    expect(authenticationReducer([], action)).to.eql({authenticated: false})
   });
 });

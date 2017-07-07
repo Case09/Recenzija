@@ -7,8 +7,10 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case IS_LOGGED_IN:
-      return action.payload
+      return Object.assign({}, state, {
+        authenticated: action.isLoggedIn
+      })
     default:
-      return state;
+      return state.authenticated;
   }
 }

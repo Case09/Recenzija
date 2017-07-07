@@ -11,7 +11,7 @@ export default class Header extends Component {
         return (
             <div className="header">
               <div className="well">
-                <UserDropdown isLoggedIn={false} />
+                <UserDropdown />
               </div>
             </div>
         );
