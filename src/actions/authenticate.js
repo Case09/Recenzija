@@ -1,8 +1,7 @@
 import { IS_LOGGED_IN } from './constants';
 
-export function authenticate(loggedIn) {
+export function authenticate() {
   return {
-    type: IS_LOGGED_IN,
-    isLoggedIn: loggedIn
+    type: IS_LOGGED_IN
   };
 }
