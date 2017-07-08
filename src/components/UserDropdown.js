@@ -11,7 +11,7 @@ export class UserDropdown extends Component {
     }
 
     render() {
-        const authenticated = this.props.authenticated;
+        const loggedIn = this.props.loggedIn;
         const style = { pointer: "cursor" };
         return (
             <div className={styles.dropdown}>
@@ -21,7 +21,7 @@ export class UserDropdown extends Component {
                         <span style={{marginLeft: "5px"}} className="caret"></span>
                     </button>
                     {
-                        authenticated ?
+                        loggedIn ?
                         <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <li style={style}><a href="">Avatar</a></li>
                             <li style={style}><Link to="/userSettings" >User Settings</Link></li>
@@ -37,9 +37,13 @@ export class UserDropdown extends Component {
     }
 }
 
+function getLoginState(state) {
+    return state.loggedIn
+}
+
 function mapStateToProps(state) {
     return {
-        authenticated: state.authenticated
+        loggedIn: getLoginState(state.loggedIn)
     };
 }
 

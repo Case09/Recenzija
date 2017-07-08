@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
-    // contextTypes is used to get access to router inside out class
     static contextTypes = {
       router: PropTypes.object
     }
 
     componentWillMount() {
-      if (!this.props.authenticated) {
-        this.context.router.history.push('/');
+      if (!this.props.loggedIn) {
+        this.props.history.push('/');
       }
     }
 
-    componentWillUpdate(nextProps) {
-      if (!nextProps.authenticated) {
-        this.context.router.history.push('/');
+    componentWillUpdate(nextProps) {;
+      if (!this.props.loggedIn) {
+        this.props.history.push('/');
       }
     }
 
@@ -26,11 +26,11 @@ export default function(ComposedComponent) {
     }
   }
 
-  function mapStatetoProps(state) {
+  function mapStateToProps(state) {
     return {
-      authenticated: state.authenticated
-    };
+      loggedIn: state.loggedIn
+    }
   }
 
-  return connect(mapStatetoProps)(Authentication);
+  return withRouter(connect(mapStateToProps)(Authentication));
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect  } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
 import { login } from '../actions/login';
 
@@ -10,18 +11,26 @@ export class Login extends Component {
       router: PropTypes.object
     }
 
-    componentWillMount() {
-        this.props.login(true);
+    constructor(props) {
+        super(props);
+        this.state = {
+            submitted: false
+        }
     }
 
     render() {
         return (
-            <span></span>
+            this.state.submitted ? <Redirect to="/home" /> : <button className="btn btn-primary" onClick={this.login.bind(this)}>Login</button>
         )
+    }
+
+    login() {
+        this.props.login(true);
+        this.setState({submitted: true});
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
     return {
         login: bindActionCreators(login, dispatch)
     }
